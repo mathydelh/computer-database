@@ -1,0 +1,10 @@
+package com.formation.jee.dao;
+
+import java.util.List;
+
+import com.formation.jee.domain.Company;
+
+public interface CompanyDao {
+//	public List<User> getUsers();
+//	public void addUsers(User user);
+}
