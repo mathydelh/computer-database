@@ -1,40 +1,49 @@
 package com.formation.jee.domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity 
 @Table(name = "computer")
-@NamedQuery(name = "findAllComputers", query = "Select cr From Computer cr")
+@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c")
 public class Computer {
 	@Id 
 	@GeneratedValue
-	private int id;
+	private long id;
 	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="introduced")
-	private Timestamp introduced;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date introduced;
 	
 	@Column(name="discontinued")
-	private Timestamp discontinued;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date discontinued;
 	
-	@Column(name="company_id")
-	private int company_id;
+	//@Column(name="company_id")
+//	private int company_id;
+	@ManyToOne
+	@JoinColumn(name="company_id")
+	private Company company;
 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -46,38 +55,47 @@ public class Computer {
 		this.name = name;
 	}
 
-	public Timestamp getIntroduced() {
+	public Date getIntroduced() {
 		return introduced;
 	}
 
-	public void setIntroduced(Timestamp introduced) {
+	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
 	}
 
-	public Timestamp getDiscontinued() {
+	public Date getDiscontinued() {
 		return discontinued;
 	}
 
-	public void setDiscontinued(Timestamp discontinued) {
+	public void setDiscontinued(Date discontinued) {
 		this.discontinued = discontinued;
 	}
 
-	public int getCompany_id() {
-		return company_id;
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompany_id(int company_id) {
-		this.company_id = company_id;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
+	
 
 	public static class Builder {
+		public Computer getComputer() {
+			return computer;
+		}
+
+		public void setComputer(Computer computer) {
+			this.computer = computer;
+		}
+
 		private Computer computer;
 		
 		public Builder() {
 			computer = new Computer();
 		}
 		
-		public Builder id(int id) {
+		public Builder id(long id) {
 			computer.setId(id);
 			return this;
 		}
@@ -87,18 +105,18 @@ public class Computer {
 			return this;
 		}
 		
-		public Builder introduced(Timestamp introduced) {
+		public Builder introduced(Date introduced) {
 			computer.setIntroduced(introduced);
 			return this;
 		}
 		
-		public Builder discontinued(Timestamp discontinued) {
+		public Builder discontinued(Date discontinued) {
 			computer.setDiscontinued(discontinued);
 			return this;
 		}
 		
-		public Builder company_id(int company_id) {
-			computer.setCompany_id(company_id);
+		public Builder company_id(Company company) {
+			computer.setCompany(company);
 			return this;
 		}
 		
@@ -109,7 +127,7 @@ public class Computer {
 
 	@Override
 	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced="+introduced+", discontinued="+discontinued+", company_id="+company_id+"]";
+		return "Computer [id_Computer=" + id + ", name=" + name + ", introduced="+introduced+", discontinued="+discontinued+", company_id=+company.getId()+]";
 	}	
 }
 

@@ -11,23 +11,31 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
 
-import com.formation.jee.dao.UserDao;
-import com.formation.jee.dao.impl.UserDaoImpl;
+import com.formation.jee.dao.CompanyDao;
+import com.formation.jee.dao.ComputerDao;
+import com.formation.jee.dao.impl.CompanyDaoImpl;
+import com.formation.jee.dao.impl.ComputerDaoImpl;
 
 public enum DaoManager {
 
 	INSTANCE;
 
-	private UserDao userDao;
+	private CompanyDao companyDao;
+	private ComputerDao computerDao;
 	private EntityManagerFactory emf;
 	
 	private DaoManager() {
-		emf = Persistence.createEntityManagerFactory("epfPU"); // Qu'est ce que c'est epfPU?
-		userDao = new UserDaoImpl();
+		emf = Persistence.createEntityManagerFactory("computer-databasePU"); // Qu'est ce que c'est epfPU?
+		companyDao = new CompanyDaoImpl();
+		computerDao = new ComputerDaoImpl();
 	}
 
-	public UserDao getUserDao() {
-		return userDao;
+	public CompanyDao getCompanyDao() {
+		return companyDao;
+	}
+	
+	public ComputerDao getComputerDao() {
+		return computerDao;
 	}
 	
 	public EntityManager getEntityManager() {

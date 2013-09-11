@@ -20,24 +20,41 @@ public class CompanyDaoImpl implements CompanyDao {
 	public CompanyDaoImpl() {
 	}
 
-//	@SuppressWarnings("unchecked")
-//	@Override
-//	public List<User> getUsers() {
-//		EntityManager em = null;
-//
-//		List<User> users = null;
-//
-//		try {
-//			em = DaoManager.INSTANCE.getEntityManager();
-//
-//			users = em.createNamedQuery("findAllUsers").getResultList();
-//		} finally {
-//			em.close();
-//		}
-//
-//		System.out.println("Returning result...");
-//		return users;
-//	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Company> getCompanies() {
+		EntityManager em = null;
+
+		List<Company> companies = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			companies = em.createNamedQuery("findAllCompanies").getResultList();
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return companies;
+	}
+	
+	@Override
+	public Company getCompany(long id) {
+		EntityManager em = null;
+
+		Company company = new Company();
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			company = (Company) em.createNamedQuery("findCompanybyId").setParameter("id", id).getSingleResult();
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return company;
+	}
 	
 //	public void addUsers(User user) {
 //		EntityManager em = null;

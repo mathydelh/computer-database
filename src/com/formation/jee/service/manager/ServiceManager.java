@@ -1,18 +1,26 @@
 package com.formation.jee.service.manager;
 
-import com.formation.jee.service.UserService;
-import com.formation.jee.service.impl.UserServiceImpl;
+import com.formation.jee.service.CompanyService;
+import com.formation.jee.service.ComputerService;
+import com.formation.jee.service.impl.CompanyServiceImpl;
+import com.formation.jee.service.impl.ComputerServiceImpl;
 
 public enum ServiceManager {
 	INSTANCE;
 	
-	private UserService userService;
+	private CompanyService companyService;
+	private ComputerService computerService;
 	
 	private ServiceManager(){
-		userService=new UserServiceImpl();
+		companyService=new CompanyServiceImpl();
+		computerService=new ComputerServiceImpl();
 	}
 	
-	public UserService getUserService(){
-		return userService;
+	public CompanyService getCompanyService(){
+		return companyService;
+	}
+	
+	public ComputerService getComputerService(){
+		return computerService;
 	}
 }

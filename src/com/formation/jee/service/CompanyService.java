@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.formation.jee.domain.Company;
 
-public interface UserService {
+public interface CompanyService {
 
-//	public abstract List<Company> getUsers();
+	public abstract List<Company> getCompanies();
+	public abstract Company getCompany(long id);
 //	public abstract void addUsers(Company user);
 
 }
