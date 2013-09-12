@@ -16,11 +16,12 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "findAllCompanies", query = "SELECT c FROM Company c"),
     @NamedQuery(name="findCompanybyId", query="SELECT c FROM Company c WHERE c.id = :id"),
+    @NamedQuery(name="findCompanybyName", query="SELECT c FROM Company c WHERE c.name = :name")
 })
 public class Company {
 	@Id 
 	@GeneratedValue
-	private int id;
+	private long id;
 	
 	@Column(name="name")
 	private String name;
@@ -30,10 +31,10 @@ public class Company {
 		return this.getComputers(); //Peutetre ZARBI
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -50,7 +51,7 @@ public class Company {
 			company = new Company();
 		}
 		
-		public Builder id(int id) {
+		public Builder id(long id) {
 			company.setId(id);
 			return this;
 		}

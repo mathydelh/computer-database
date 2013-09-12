@@ -13,7 +13,7 @@
 				value="Filter by name"
 				class="btn primary">
 		</form>
-		<a class="btn success" id="add" href="addComputer.jsp">Add Computer</a>
+		<a class="btn success" id="add" href="AddPCServlet">Add Computer</a>
 	</div>
 
 		<table class="computers zebra-striped">
@@ -21,11 +21,12 @@
 				<tr>
 					<!-- Variable declarations for passing labels as parameters -->
 					<!-- Table header for Computer Name -->
-					<th>Computer Name</th>
+					<th><a href="/computer-database/DatabaseServlet/?sort=name">Computer Name</a></th>
+					<!-- Table header for Discontinued Date -->
  					<th>Introduced Date</th> 
-<!-- 					Table header for Discontinued Date -->
+					<!-- Table header for Discontinued Date -->
  					<th>Discontinued Date</th> 
-<!-- 					Table header for Company -->
+					<!-- Table header for Company -->
  					<th>Company</th> 
 				</tr>
 			</thead>
@@ -37,18 +38,6 @@
  					<td>${computer.discontinued}</td> 
  					<td>${computer.company.name}</td> 
 				</tr>
-<!-- 				<tr> -->
-<!-- 					<td><a href="#">Precision 3500</a></td> -->
-<!-- 					<td>2010-05-07</td> -->
-<!-- 					<td>2012-06-01</td> -->
-<!-- 					<td>Dell</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td><a href="#">Macbook Air</a></td> -->
-<!-- 					<td>2005-05-09</td> -->
-<!-- 					<td>2008-06-06</td> -->
-<!-- 					<td>Apple</td> -->
-<!-- 				</tr> -->
 				</c:forEach>
 			</tbody>
 		</table>

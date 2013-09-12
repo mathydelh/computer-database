@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,7 +16,13 @@ import javax.persistence.TemporalType;
 
 @Entity 
 @Table(name = "computer")
-@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c")
+@NamedQueries({
+	@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c"),
+    @NamedQuery(name="findComputerbyId", query="SELECT c FROM Computer c WHERE c.id = :id"),
+    @NamedQuery(name="findComputerbyName", query="SELECT c FROM Computer c WHERE c.name = :name"),
+	@NamedQuery(name="SortComputerbyName", query="SELECT c FROM Computer c ORDER BY c.name DESC")
+})
+
 public class Computer {
 	@Id 
 	@GeneratedValue

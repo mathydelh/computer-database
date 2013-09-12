@@ -1,7 +1,7 @@
 package com.formation.jee.controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,12 +55,14 @@ public class DatabaseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("companies", companyService.getCompanies());
+		System.out.println("coucocu");
 		String name = request.getParameter("name");
 		
 		String intro = request.getParameter("introducedDate");
 		Date introduced=null;
 		try {
-			introduced = (Date) new SimpleDateFormat().parse(intro);
+			introduced = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(intro);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -69,7 +71,7 @@ public class DatabaseServlet extends HttpServlet {
 		String disc = request.getParameter("discontinuedDate");
 		Date discontinued=null;
 		try {
-			discontinued = (Date) new SimpleDateFormat().parse(disc);
+			discontinued = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(disc);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
