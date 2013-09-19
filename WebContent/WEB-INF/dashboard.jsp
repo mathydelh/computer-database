@@ -4,7 +4,7 @@
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
-	<h1 id="homeTitle">456 Computers found</h1>
+ 	<h1 id="homeTitle">${number_PC} Computers found</h1> 
 	<div id="actions">
 		<form action="" method="GET">
 			<input type="search" id="searchbox" name="search"
@@ -21,21 +21,21 @@
 				<tr>
 					<!-- Variable declarations for passing labels as parameters -->
 					<!-- Table header for Computer Name -->
-					<th><a href="/computer-database/DatabaseServlet/?sort=name">Computer Name</a></th>
+					<th><a href="<c:url value="DatabaseServlet?sort=name" />">Computer Name</a></th>
 					<!-- Table header for Discontinued Date -->
- 					<th>Introduced Date</th> 
+ 					<th><a href="<c:url value="DatabaseServlet?sort=introduced" />">Introduced Date</a></th> 
 					<!-- Table header for Discontinued Date -->
- 					<th>Discontinued Date</th> 
+ 					<th><a href="<c:url value="DatabaseServlet?sort=discontinued" />">Discontinued Date</a></th> 
 					<!-- Table header for Company -->
- 					<th>Company</th> 
+ 					<th><a href="<c:url value="DatabaseServlet?sort=company" />">Company</a></th> 
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.computers}" var="computer">
 				<tr>
 					<td>${computer.name}</td>
- 					<td>${computer.introduced}</td> 
- 					<td>${computer.discontinued}</td> 
+ 					<td>${computer.introducedAsString}</td> 
+ 					<td>${computer.discontinuedAsString}</td> 
  					<td>${computer.company.name}</td> 
 				</tr>
 				</c:forEach>

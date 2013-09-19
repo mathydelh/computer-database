@@ -1,5 +1,6 @@
 package com.formation.jee.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,12 +17,16 @@ import javax.persistence.TemporalType;
 
 @Entity 
 @Table(name = "computer")
-@NamedQueries({
-	@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c"),
-    @NamedQuery(name="findComputerbyId", query="SELECT c FROM Computer c WHERE c.id = :id"),
-    @NamedQuery(name="findComputerbyName", query="SELECT c FROM Computer c WHERE c.name = :name"),
-	@NamedQuery(name="SortComputerbyName", query="SELECT c FROM Computer c ORDER BY c.name DESC")
-})
+//@NamedQueries({
+//	@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c"),
+//    @NamedQuery(name="findComputerbyId", query="SELECT c FROM Computer c WHERE c.id = :id"),
+//    @NamedQuery(name="findComputerbyName", query="SELECT c FROM Computer c WHERE c.name = :name"),
+//	@NamedQuery(name="SortComputerbyName", query="SELECT c FROM Computer c ORDER BY c.name ASC"),
+//	@NamedQuery(name="SortComputerbyIntroduced", query="SELECT c FROM Computer c ORDER BY c.introduced ASC"),
+//	@NamedQuery(name="SortComputerbyDiscontinued", query="SELECT c FROM Computer c ORDER BY c.discontinued ASC"),
+//	@NamedQuery(name="SortComputerbyCompany", query="SELECT c FROM Computer c ORDER BY c.company.name ASC"),
+//	@NamedQuery(name="SearchComputer", query="SELECT c FROM Computer c WHERE c.name LIKE :search")
+//})
 
 public class Computer {
 	@Id 
@@ -39,8 +44,6 @@ public class Computer {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date discontinued;
 	
-	//@Column(name="company_id")
-//	private int company_id;
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private Company company;
@@ -65,6 +68,14 @@ public class Computer {
 	public Date getIntroduced() {
 		return introduced;
 	}
+	
+	public String getIntroducedAsString() {
+		if(introduced==null)
+			return "";
+		SimpleDateFormat leformat= new SimpleDateFormat("yyyy-MM-dd");
+		String intro = (String) leformat.format(introduced); 
+		return intro;
+	}
 
 	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
@@ -72,6 +83,14 @@ public class Computer {
 
 	public Date getDiscontinued() {
 		return discontinued;
+	}
+	
+	public String getDiscontinuedAsString() {
+		if(discontinued==null)
+			return "";
+		SimpleDateFormat leformat= new SimpleDateFormat("yyyy-MM-dd");
+		String disc = (String) leformat.format(discontinued); 
+		return disc;
 	}
 
 	public void setDiscontinued(Date discontinued) {

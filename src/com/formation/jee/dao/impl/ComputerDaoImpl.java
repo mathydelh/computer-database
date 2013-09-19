@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 
 import com.formation.jee.dao.ComputerDao;
 import com.formation.jee.dao.manager.DaoManager;
@@ -30,7 +31,8 @@ public class ComputerDaoImpl implements ComputerDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 
-			computers = em.createNamedQuery("findAllComputers").getResultList();
+			String query = "SELECT c FROM Computer c";
+			computers = em.createQuery(query).getResultList();
 			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
 		} finally {
 			em.close();
@@ -40,6 +42,132 @@ public class ComputerDaoImpl implements ComputerDao {
 		return computers;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Computer> getComputersSortedByName() {
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			String query = "SELECT c FROM Computer c ORDER BY c.name ASC";
+			computers = em.createQuery(query).getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return computers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Computer> getComputersSortedByIntroduced() {
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			String query = "SELECT c FROM Computer c ORDER BY c.introduced ASC";
+			computers = em.createQuery(query).getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return computers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Computer> getComputersSortedByDiscontinued() {
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			String query = "SELECT c FROM Computer c ORDER BY c.discontinued ASC";
+			computers = em.createQuery(query).getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return computers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Computer> getComputersSortedByCompany() {
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			String query = "SELECT c FROM Computer c ORDER BY c.company.name ASC";
+			computers = em.createQuery(query).getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return computers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Computer> getComputersSortedBySearch(String search) {
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			String query = "SELECT c FROM Computer c WHERE c.name LIKE :search";
+			computers = em.createQuery(query).setParameter("search","%"+search+"%").getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning result...");
+		return computers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getLength(){
+		EntityManager em = null;
+
+		List<Computer> computers = null;
+		//
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			String query = "SELECT c FROM Computer c";
+			computers = em.createQuery(query).getResultList();
+			//System.out.println(computers.size()+" "+computers.get(0)+computers.get(1)+computers.get(2));
+		} finally {
+			em.close();
+		}
+
+		System.out.println("Returning length...");
+		return computers.size();
+	}
+	
+	@Override
 	public void addComputers(Computer computer) {
 		EntityManager em = null;
 		em = DaoManager.INSTANCE.getEntityManager();

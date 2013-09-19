@@ -23,6 +23,36 @@ public class ComputerServiceImpl implements ComputerService {
 		return computerDao.getComputers();
 	}
 	
+	@Override
+	public List<Computer> getComputersSortedByName() {
+		return computerDao.getComputersSortedByName();
+	}
+	
+	@Override
+	public List<Computer> getComputersSortedByIntroduced() {
+		return computerDao.getComputersSortedByIntroduced();
+	}
+	
+	@Override
+	public List<Computer> getComputersSortedByDiscontinued() {
+		return computerDao.getComputersSortedByDiscontinued();
+	}
+	
+	@Override
+	public List<Computer> getComputersSortedByCompany() {
+		return computerDao.getComputersSortedByCompany();
+	}
+	
+	@Override
+	public List<Computer> getComputersSortedBySearch(String search) {
+		return computerDao.getComputersSortedBySearch(search);
+	}
+	
+	@Override
+	public int getLengthComputers(){
+		return computerDao.getLength();
+	}
+	
 	
 	
 	@Override

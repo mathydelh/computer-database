@@ -6,7 +6,7 @@
 
 	<h1>Add Computer</h1>
 	
-	<form action="DatabaseServlet" method="POST">
+	<form method="POST" action="AddPCServlet">
 		<fieldset>
 			<div class="clearfix">
 				<label for="name">Computer name:</label>
