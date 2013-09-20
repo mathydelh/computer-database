@@ -3,7 +3,6 @@ package com.formation.jee.service.impl;
 import java.util.List;
 
 import com.formation.jee.dao.ComputerDao;
-import com.formation.jee.dao.impl.ComputerDaoImpl;
 import com.formation.jee.dao.manager.DaoManager;
 import com.formation.jee.domain.Computer;
 import com.formation.jee.service.ComputerService;
@@ -16,11 +15,17 @@ public class ComputerServiceImpl implements ComputerService {
 		computerDao = DaoManager.INSTANCE.getComputerDao();
 	}
 	/* (non-Javadoc)
+	 * Appel des méthodes décrites
 	 * @see com.formation.jee.service.impl.ComputerService#getComputers()
 	 */
 	@Override
 	public List<Computer> getComputers() {
 		return computerDao.getComputers();
+	}
+	
+	@Override
+	public List<Computer> getPaginatedComputers(int length, int start){
+		return computerDao.getPaginatedComputers(length, start);
 	}
 	
 	@Override
@@ -49,14 +54,27 @@ public class ComputerServiceImpl implements ComputerService {
 	}
 	
 	@Override
+	public Computer getComputerSortedById(long id){
+		return computerDao.getComputerSortedById(id);
+	}
+	
+	@Override
 	public int getLengthComputers(){
 		return computerDao.getLength();
 	}
 	
-	
-	
 	@Override
 	public void addComputers(Computer computer) {
 		computerDao.addComputers(computer);
+	}
+	
+	@Override
+	public void updateComputers(Computer computer){
+		computerDao.updateComputers(computer);
+	}
+	
+	@Override
+	public void clearComputers(long id){
+		computerDao.clearComputers(id);
 	}
 }

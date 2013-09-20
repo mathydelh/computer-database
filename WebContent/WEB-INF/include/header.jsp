@@ -8,6 +8,8 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/main.css" rel="stylesheet" media="screen">
+<link href="css/FormValidation.css" rel="stylesheet">
+<script type="text/javascript" src="js/FormValidation.js" ></script>
 </head>
 <body>
 	<header class="topbar">

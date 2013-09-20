@@ -1,12 +1,5 @@
 package com.formation.jee.dao.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,6 +13,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	public CompanyDaoImpl() {
 	}
 
+	//Cette fonction renvoie la liste des entreprises de la base de données, triés par identifiants
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Company> getCompanies() {
@@ -30,15 +24,16 @@ public class CompanyDaoImpl implements CompanyDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 
-			companies = em.createNamedQuery("findAllCompanies").getResultList();
+			String query = "SELECT c FROM Company c";//Récupérer tous les entreprises compris dans la base de données
+			companies = em.createQuery(query).getResultList(); 
 		} finally {
 			em.close();
 		}
-
-		System.out.println("Returning result...");
 		return companies;
 	}
 	
+	//Cette fonction renvoie une entreprise en fonction de son identifiant
+	//id: l'identifiant recherché
 	@Override
 	public Company getCompany(long id) {
 		EntityManager em = null;
@@ -47,22 +42,11 @@ public class CompanyDaoImpl implements CompanyDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 
-			company = (Company) em.createNamedQuery("findCompanybyId").setParameter("id", id).getSingleResult();
+			String query="SELECT c FROM Company c WHERE c.id = :id";//Chercher l'ordinateur selon son identifiant
+			company = (Company) em.createQuery(query).setParameter("id", id).getSingleResult();
 		} finally {
 			em.close();
 		}
-
-		System.out.println("Returning result...");
 		return company;
 	}
-	
-//	public void addUsers(User user) {
-//		EntityManager em = null;
-//		em = DaoManager.INSTANCE.getEntityManager();
-//		
-//		em.getTransaction().begin();
-//	    em.persist(user); //em.merge(u); for updates
-//	    em.getTransaction().commit();
-//	    em.close(); 
-//	}
 }

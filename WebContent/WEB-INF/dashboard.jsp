@@ -6,6 +6,7 @@
 <section id="main">
  	<h1 id="homeTitle">${number_PC} Computers found</h1> 
 	<div id="actions">
+		<!-- 	les information saisies par l'utilisateur dans le champs de recherche seront transmis par la méthode get -->	
 		<form action="" method="GET">
 			<input type="search" id="searchbox" name="search"
 				value="" placeholder="Search name">
@@ -13,7 +14,7 @@
 				value="Filter by name"
 				class="btn primary">
 		</form>
-		<a class="btn success" id="add" href="AddPCServlet">Add Computer</a>
+		<a class="btn success" id="add" href="AddPCServlet">Add Computer</a> <!--  Lien vers la page d'ajout d'ordinateur -->
 	</div>
 
 		<table class="computers zebra-striped">
@@ -31,16 +32,38 @@
 				</tr>
 			</thead>
 			<tbody>
+<!-- 						Parcours de la BD pour récuperer touts les ordinateurs -->
 				<c:forEach items="${requestScope.computers}" var="computer">
 				<tr>
-					<td>${computer.name}</td>
+<!-- 						l'Identifiant est transmis par l'url -->
+					<td><a href="<c:url value="EditPCServlet?id=${computer.id}" />">${computer.name}</a></td>
  					<td>${computer.introducedAsString}</td> 
  					<td>${computer.discontinuedAsString}</td> 
  					<td>${computer.company.name}</td> 
 				</tr>
 				</c:forEach>
-			</tbody>
+			</tbody> 
 		</table>
+<!-- 						Affichage du numéro des pages -->
+		<table class="computers zebra-striped"> 
+			        <tr>
+			            <c:forEach begin="1" end="${noOfPages}" var="i">
+			                <c:choose>
+			                    <c:when test="${currentPage eq i}">
+			                        <td>${i}</td>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <td><a href="DatabaseServlet?page=${i}">${i}</a></td>
+			                    </c:otherwise>
+			                </c:choose>
+			            </c:forEach>
+			        </tr>
+			    </table>
+			 
+			    <%--For displaying Next link --%>
+			    <c:if test="${currentPage lt noOfPages}">
+			        <td><a href="DatabaseServlet?page=${currentPage + 1}">Next</a></td>
+			    </c:if>
 </section>
 
 <jsp:include page="include/footer.jsp" />

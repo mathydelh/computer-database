@@ -1,13 +1,7 @@
 package com.formation.jee.controller;
 
 import java.io.IOException;
-import java.util.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,101 +9,81 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.formation.jee.dao.manager.DaoManager;
-import com.formation.jee.domain.Company;
-import com.formation.jee.domain.Computer;
-import com.formation.jee.service.CompanyService;
 import com.formation.jee.service.ComputerService;
 import com.formation.jee.service.manager.ServiceManager;
 
 /**
- * Servlet implementation class UserServlet
+ * Classe Servlet relié à dashboard.jsp
+ * Servlet implementation class DatabaseServlet
  */
 @WebServlet("/DatabaseServlet")
 public class DatabaseServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    private CompanyService companyService;
+	private static final long serialVersionUID = 1L; //le numéro de version
     private ComputerService computerService;
     /**
+     * Constructeur : initialisation des attributs
      * @see HttpServlet#HttpServlet()
      */
     public DatabaseServlet() {
         super();
-        companyService = ServiceManager.INSTANCE.getCompanyService();
         computerService = ServiceManager.INSTANCE.getComputerService();
     }
 
 	/**
+	 * méthode Get avec, en paramètres la requête et la réponse
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("kikou");
+		int page = 1; // Par défaut, nous sommes sur la page 1 de la liste d'ordinateurs
+        int recordsPerPage = 30; //Il y a 30 ordinateurs par page
 		
-		String search_input = request.getParameter("search");
+        if(request.getParameter("page") != null) //Si le numéro de la page est inscrit
+            page = Integer.parseInt(request.getParameter("page")); // On récupère le numéro
+		
+		String search_input = request.getParameter("search");//On récupère la valeur dans le champs de recherche
+		
+		//Si le champs de recherche n'est pas vide, afficher les ordinateurs correspondants à la recherche
 		if(search_input!=null&&!(search_input.trim().isEmpty())){
 			request.setAttribute("computers", computerService.getComputersSortedBySearch(search_input));
 		}
+		//Sinon si le champs de recherche est vide, on affiche la liste complète des ordinateurs
 		else{
-		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
-		String sort = request.getParameter("sort");
-		System.out.println( "String passed in was " + sort );
-		if(sort==null){
-			request.setAttribute("computers", computerService.getComputers());
+		String sort = request.getParameter("sort");//Savoir si l'utilisateur souhaite trier la liste
+		
+		if(sort==null){ //si il n'y a pas de demande de tri, afficher tous les ordinateurs
+			int pagination=30*page-1;
+			request.setAttribute("computers", computerService.getPaginatedComputers(recordsPerPage, pagination));
 		}
-		else if(sort.equals("name")){
+		else if(sort.equals("name")){// On trie par nom
 			request.setAttribute("computers", computerService.getComputersSortedByName());
 		}
-		else if(sort.equals("introduced")){
+		else if(sort.equals("introduced")){// On trie par date de lancement
 			request.setAttribute("computers", computerService.getComputersSortedByIntroduced());
 		}
-		else if(sort.equals("discontinued")){
+		else if(sort.equals("discontinued")){// On trie par date d'interruption
 			request.setAttribute("computers", computerService.getComputersSortedByDiscontinued());
 		}
-		else if(sort.equals("company")){
+		else if(sort.equals("company")){// On trie par nom d'entreprise
 			request.setAttribute("computers", computerService.getComputersSortedByCompany());
 		}
 		}
-		request.setAttribute("number_PC", new Integer(computerService.getLengthComputers()));
+		int n_PC=new Integer(computerService.getLengthComputers());// On affiche le nombre d'ordinateurs inscrit dans la BD
+		request.setAttribute("number_PC", n_PC );
+		
+		// On affiche les pages de pagination
+		long noOfPages = (long) Math.ceil(n_PC * 1.0 / recordsPerPage);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("noOfPages", noOfPages);
+		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
+	 * méthode Post avec, en paramètres la requête et la réponse
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setAttribute("companies", companyService.getCompanies()); 
-//		String name = request.getParameter("name");
-//		
-//		String intro = request.getParameter("introducedDate");
-//		Date introduced=null;
-//		try {
-//			introduced = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(intro);
-//		} catch (ParseException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		String disc = request.getParameter("discontinuedDate");
-//		Date discontinued=null;
-//		try {
-//			discontinued = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(disc);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		String id_c = request.getParameter("company");
-//		long company_id = Long.parseLong(id_c);
-//		
-//		Company company = new Company();
-//		company = companyService.getCompany(company_id);
-//		//if(password!=null&&!password.isEmpty()&&login!=null)
-//		Computer computer= new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).company_id(company).build();
-//		System.out.println("hey"+computer.getName());
-//		computerService.addComputers(computer);
-//		doGet(request, response);
-//		//users.add
 	}
 
 }

@@ -19,14 +19,16 @@ import com.formation.jee.service.ComputerService;
 import com.formation.jee.service.manager.ServiceManager;
 
 /**
+ * Classe Servlet en lien avec addComputer.jsp
  * Servlet implementation class AddPCServlet
  */
 @WebServlet("/AddPCServlet")
 public class AddPCServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; //le numéro de version
     private CompanyService companyService;
     private ComputerService computerService;
     /**
+     * Constructeur : initialisation des attributs
      * @see HttpServlet#HttpServlet()
      */
     public AddPCServlet() {
@@ -37,11 +39,12 @@ public class AddPCServlet extends HttpServlet {
     }
 
 	/**
+	 * méthode Get avec, en paramètres la requête et la réponse
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub 
-		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
+		//Récupérer toutes les companies
 		request.setAttribute("companies", companyService.getCompanies());
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/addComputer.jsp"));
@@ -49,16 +52,18 @@ public class AddPCServlet extends HttpServlet {
 	}
 
 	/**
+	 * méthode Post avec, en paramètres la requête et la réponse
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//Récupérer ce que l’utilisateur a entré dans chaques champs
 		request.setAttribute("companies", companyService.getCompanies()); 
 		String name = request.getParameter("name");
 		
 		String intro = request.getParameter("introducedDate");
 		Date introduced=null;
-		try {
+		try {// Transforme la chaine de caractères récupérée en date
 			introduced = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(intro);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
@@ -67,25 +72,43 @@ public class AddPCServlet extends HttpServlet {
 		
 		String disc = request.getParameter("discontinuedDate");
 		Date discontinued=null;
-		try {
+		try {// Transforme la chaine de caractères récupérée en date
 			discontinued = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(disc);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		String id_c = request.getParameter("company");
-		long company_id = Long.parseLong(id_c);
+		String id_c = request.getParameter("company");// Récupère l'identifiant de l'entreprise
+		long company_id = Long.parseLong(id_c);//Transforme la chaine de caractère en long
 		
+		Computer computer;
+		
+		// Si les valeurs récupérées ne sont pas nulles
+		if((name.trim()!=""&&name!=null)&&(introduced!=null)&&(discontinued!=null)){
+		if(company_id!=-1){ // Si l'utilisateur a choisi une entreprise lié à l'ordinateur
 		Company company = new Company();
-		company = companyService.getCompany(company_id);
-		//if(password!=null&&!password.isEmpty()&&login!=null)
-		Computer computer= new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).company_id(company).build();
-		System.out.println("hey"+computer.getName());
+		company = companyService.getCompany(company_id);//On retrouve l'entreprise à partir de son identifiant
+		
+		// On crée l'ordinateur en utilisant le builder
+		computer= new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).company_id(company).build();
+		
+		// On ajoute l'ordinateur à la base de données
 		computerService.addComputers(computer);
-		//doGet(request, response);
-		response.sendRedirect("DatabaseServlet");
-		// TODO Auto-generated method stub
+		}
+		else{// Si l'utilisateur à préféré ne pas sélectionner de companie
+			// On crée l'ordinateur en utilisant le builder
+			computer= new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).build();
+			
+			// On ajoute l'ordinateur à la base de données
+			computerService.addComputers(computer);
+		}
+		}
+		else{
+			
+		}
+		
+		response.sendRedirect("DatabaseServlet");// Retour à la page d’accueil
 	}
 
 }

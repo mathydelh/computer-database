@@ -1,15 +1,8 @@
 package com.formation.jee.dao.manager;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.sql.DataSource;
 
 import com.formation.jee.dao.CompanyDao;
 import com.formation.jee.dao.ComputerDao;
@@ -25,7 +18,8 @@ public enum DaoManager {
 	private EntityManagerFactory emf;
 	
 	private DaoManager() {
-		emf = Persistence.createEntityManagerFactory("computer-databasePU"); // Qu'est ce que c'est epfPU?
+		emf = Persistence.createEntityManagerFactory("computer-databasePU"); 
+		// computer-databasePU se trouve dans le Persistence.xml
 		companyDao = new CompanyDaoImpl();
 		computerDao = new ComputerDaoImpl();
 	}

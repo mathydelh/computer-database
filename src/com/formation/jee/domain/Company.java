@@ -2,35 +2,30 @@ package com.formation.jee.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
-import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+// Le modèle de base de données de la table company est décrit ici
 @Entity 
 @Table(name = "company")
-@NamedQueries({
-    @NamedQuery(name = "findAllCompanies", query = "SELECT c FROM Company c"),
-    @NamedQuery(name="findCompanybyId", query="SELECT c FROM Company c WHERE c.id = :id"),
-    @NamedQuery(name="findCompanybyName", query="SELECT c FROM Company c WHERE c.name = :name")
-})
 public class Company {
 	@Id 
 	@GeneratedValue
-	private long id;
+	private long id;//Identifiant, généré automatiquement par la BD
 	
 	@Column(name="name")
-	private String name;
+	private String name;//Nom de l'entreprise
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) // Tres tres incertain...
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) //Ordinateurs crées par l'entreprise
 	public Computer getComputers(){
-		return this.getComputers(); //Peutetre ZARBI
+		return this.getComputers(); 
 	}
 	
+	// Getters and setters
 	public long getId() {
 		return id;
 	}
@@ -44,6 +39,7 @@ public class Company {
 		this.name = name;
 	}
 	
+	//Builder d'une entreprise
 	public static class Builder {
 		private Company company;
 		
@@ -66,6 +62,7 @@ public class Company {
 		}
 	}
 
+	//Tous les composants d'une entreprise décrits
 	@Override
 	public String toString() {
 		return "Company [id_Company=" + id + ", name=" + name + "]";

@@ -9,46 +9,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+//Le modèle de base de données de la table computer est décrit ici
 @Entity 
 @Table(name = "computer")
-//@NamedQueries({
-//	@NamedQuery(name = "findAllComputers", query = "SELECT c FROM Computer c"),
-//    @NamedQuery(name="findComputerbyId", query="SELECT c FROM Computer c WHERE c.id = :id"),
-//    @NamedQuery(name="findComputerbyName", query="SELECT c FROM Computer c WHERE c.name = :name"),
-//	@NamedQuery(name="SortComputerbyName", query="SELECT c FROM Computer c ORDER BY c.name ASC"),
-//	@NamedQuery(name="SortComputerbyIntroduced", query="SELECT c FROM Computer c ORDER BY c.introduced ASC"),
-//	@NamedQuery(name="SortComputerbyDiscontinued", query="SELECT c FROM Computer c ORDER BY c.discontinued ASC"),
-//	@NamedQuery(name="SortComputerbyCompany", query="SELECT c FROM Computer c ORDER BY c.company.name ASC"),
-//	@NamedQuery(name="SearchComputer", query="SELECT c FROM Computer c WHERE c.name LIKE :search")
-//})
-
 public class Computer {
 	@Id 
 	@GeneratedValue
-	private long id;
+	private long id; //Identifiant, généré automatiquement par la BD
 	
 	@Column(name="name")
-	private String name;
+	private String name; //Nom de l'ordinateur
 	
 	@Column(name="introduced")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date introduced;
+	private Date introduced; // Date de lancement
 	
 	@Column(name="discontinued")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date discontinued;
+	private Date discontinued; //Date d'interruption
 	
 	@ManyToOne
 	@JoinColumn(name="company_id")
-	private Company company;
+	private Company company; //Entreprise créatrice de l'ordinateur
 	
-	
+	//Getters and setters
 	public long getId() {
 		return id;
 	}
@@ -105,7 +93,7 @@ public class Computer {
 		this.company = company;
 	}
 	
-
+	// Builder d'un ordinateur
 	public static class Builder {
 		public Computer getComputer() {
 			return computer;
@@ -151,6 +139,7 @@ public class Computer {
 		}
 	}
 
+	//Tous les composants d'un ordinateur décrit
 	@Override
 	public String toString() {
 		return "Computer [id_Computer=" + id + ", name=" + name + ", introduced="+introduced+", discontinued="+discontinued+", company_id=+company.getId()+]";
