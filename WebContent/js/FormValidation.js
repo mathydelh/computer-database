@@ -4,12 +4,8 @@ window.onload = init;
 function init() {
    // Attach "onsubmit" handler
    document.getElementById("theForm").onsubmit = validateForm;
-   // Attach "onclick" handler to "reset" button
-   document.getElementById("reset").onclick = clearDisplay;
    // Set initial focus
    document.getElementById("name").focus();
-   document.getElementById("introducedDate").focus();// Petu etre à enlever
-   
 }
  
 /* The "onsubmit" handler to validate the input fields.
@@ -22,9 +18,10 @@ function init() {
  */
 function validateForm() {
    return (isNotEmpty("name", "Please enter a computer name :)")
-		&& isNotDate("introducedDate", "Please give us a correct date :)"));
-		//&& isLengthMinMax("introduced", "Please respect the length of the date :)", 10, 10)
-//		&& isLengthMinMax("discontinued", "Please respect the length of the date :)", 10, 10)
+		&& isNotEmpty("introducedDate", "Please enter a date :)")
+		&& isNotEmpty("discontinuedDate", "Please enter a date :)")
+		&& isNotDate("introducedDate", "Please give us a correct date :)")
+		&& isNotDate("discontinuedDate", "Please give us a correct date :)"));
 }
  
 // Return true if the input value is not empty
@@ -65,18 +62,42 @@ function showMessage(isValid, inputElement, errorMsg, errorElement) {
    }
 }
 
+
 //Return true if the given element is a date
 function isNotDate(inputId, errorMsg) {
-   var inputElement = document.getElementById(inputId);
-   alert(inputElement);
+   var inputElement = document.getElementById(inputId); 
    var errorElement = document.getElementById(inputId + "Error");
+   var isValid=(inputValue.length != 0);
    var inputValue = inputElement.value.trim();
    thedate = inputValue.split('-');
-   var year=thedate[0], month=thedate[1], day=thedate[2];
-   
-   if(year<1960||year>2050||month<1||month>12||day<1||day>31){
-	   return false;
-   }
+//   if(thedate.length !=3){
+//	   isValid=false;
+//   }
+//   else{
+	   var year=thedate[0], month=thedate[1], day=thedate[2];
+
+	   if(year<1960||year>2050||month<1||month>12||day<1||day>31){
+		   isValid=false;
+	   }
+	   else{
+		   isValid=true;
+	   }
+//   }
    showMessage(isValid, inputElement, errorMsg, errorElement);
-   return true;
+   return isValid;
+}
+
+//The "onclick" handler for the "reset" button to clear the display
+function clearDisplay() {
+   var elms = document.getElementsByTagName("*");  // all tags
+   for (var i = 0; i < elms.length; i++) {
+      if ((elms[i].id).match(/Error$/)) {  // no endsWith() in JS?
+         elms[i].innerHTML = "";
+      }
+      if (elms[i].className == "error") {  // assume only one class
+         elms[i].className = "";
+      }
+   }
+   // Set initial focus
+   document.getElementById("name").focus();
 }

@@ -13,30 +13,32 @@
 				<label for="name">Computer name: <span class="red">*</span></label>
 				<div class="input">
 					<input id="name" type="text" name="name"/>
-					<span class="help-inline">Required</span>
-<!-- 					indique qu'il y a une erreur avec le nom -->
-					<label id="nameError" class="red">&nbsp;</label> 
+					<span class="help-inline">Required</span>					
 				</div>
+				<!-- indique qu'il y a une erreur avec le nom -->
+				<label id="nameError" class="red">&nbsp;</label> 
 			</div>
 	
 			<div class="clearfix">
 				<label for="introducedDate">Introduced date: <span class="red">*</span></label>
 				<div class="input">
-					<input id="introducedDate" type="date" name="introducedDate" pattern="YY-MM-dd"/>
+					<input id="introducedDate" type="text" name="introducedDate" pattern="YY-MM-dd"/>
 					<span class="help-inline">YYYY-MM-DD</span>
-<!-- 					indique qu'il y a une erreur avec la date d'introduction -->
-					<label id="introducedDateError" class="red">&nbsp;</label>
+					
 				</div>
+				<!-- indique qu'il y a une erreur avec la date d'introduction -->
+				<label id="introducedDateError" class="red">&nbsp;</label>
 			</div>
 			
 			<div class="clearfix">
-				<label for="discontinued">Discontinued date: <span class="red">*</span></label>
+				<label for="discontinuedDate">Discontinued date: <span class="red">*</span></label>
 				<div class="input">
-					<input id="discontinued" type="date" name="discontinuedDate" pattern="YY-MM-dd"/>
+					<input id="discontinuedDate" type="text" name="discontinuedDate" pattern="YY-MM-dd"/>
 					<span class="help-inline">YYYY-MM-DD</span>
-<!-- 					indique qu'il y a une erreur avec la date d'interruption -->
-					<label id="discontinuedError" class="red">&nbsp;</label>
+					
 				</div>
+				<!-- indique qu'il y a une erreur avec la date d'interruption -->
+				<label id="discontinuedDateError" class="red">&nbsp;</label>
 			</div>
 			
 			<div class="clearfix">

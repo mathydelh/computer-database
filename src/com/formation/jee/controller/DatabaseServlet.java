@@ -51,8 +51,8 @@ public class DatabaseServlet extends HttpServlet {
 		String sort = request.getParameter("sort");//Savoir si l'utilisateur souhaite trier la liste
 		
 		if(sort==null){ //si il n'y a pas de demande de tri, afficher tous les ordinateurs
-			int pagination=30*page-1;
-			request.setAttribute("computers", computerService.getPaginatedComputers(recordsPerPage, pagination));
+			int debutpagination=30*(page-1);
+			request.setAttribute("computers", computerService.getPaginatedComputers(recordsPerPage, debutpagination));
 		}
 		else if(sort.equals("name")){// On trie par nom
 			request.setAttribute("computers", computerService.getComputersSortedByName());
