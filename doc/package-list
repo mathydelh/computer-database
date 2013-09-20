@@ -1,0 +1,8 @@
+com.formation.jee.controller
+com.formation.jee.dao
+com.formation.jee.dao.impl
+com.formation.jee.dao.manager
+com.formation.jee.domain
+com.formation.jee.service
+com.formation.jee.service.impl
+com.formation.jee.service.manager
