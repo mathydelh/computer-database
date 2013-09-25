@@ -1,5 +1,5 @@
-Aloysia De Bernes De Longvilliers 
-Mathilde De l'Hermuziere
+Aloysia De Bernes De Longvilliers Mathilde De l'Hermuziere
+
 ------------------------------------------------------------------
 CORRECTION+CODE REVIEW:
 ------------------------------------------------------------------
